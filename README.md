@@ -2,6 +2,8 @@
 
 测量学局劲工具（Survey Jujin）网页轻量版是面向土木类学生的纯静态测量记录与平差工具。七张表联动：表一→表三可联立（默认关闭）；表四、表六由表一推导，表五由表二推导，表G 由表一与表六带入。无需安装：用手机、平板或电脑的浏览器打开 `index.html`，或直接打开单文件 HTML；数据只保存在本机浏览器，原创代码采用木兰宽松许可证第 2 版（MulanPSL-2.0）。
 
+桌面版（Windows，Tauri v2）：[survey-jujin-taibai](https://github.com/JNGKZbird/survey-jujin-taibai)
+
 ## 速览
 
 - **七张表**：表一、表二、表三是记录表；表四、表五、表六是汇总与平差；表G 是导线计算表。
