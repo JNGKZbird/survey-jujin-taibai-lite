@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="license" content="MulanPSL-2.0">
+<title>测量学局劲工具 · 网页轻量版</title>
+<link rel="icon" href="data:,">
+<script src="assets/theme.js"></script>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div id="app">
+  <header id="titlebar">
+    <div class="titlebar-drag" id="titlebar-drag" data-tauri-drag-region aria-hidden="true"></div>
+    <div class="titlebar-brand">
+      <span class="brand-mark" aria-hidden="true">测</span>
+      <div class="titlebar-title">
+        <strong>测量学局劲工具</strong>
+        <span class="titlebar-sub">SURVEY JUJIN</span>
+      </div>
+    </div>
+    <nav id="tabs" class="tabs" role="tablist" aria-label="功能模块">
+      <button type="button" class="tab" role="tab" data-table="traverse" aria-selected="true" aria-controls="stage">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 18.5h16M6 16l4.2-6 3.2 3.2L18 6.5"/>
+          <circle cx="18" cy="6.5" r="1.4"/>
+        </svg>
+        <span>表一 导线</span>
+      </button>
+      <button type="button" class="tab" role="tab" data-table="leveling" aria-selected="false" aria-controls="stage">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 12h18M6 12l1.6-3.4h8.8L18 12M9 15.5h6"/>
+          <circle cx="12" cy="6.5" r="1.3"/>
+        </svg>
+        <span>表二 水准</span>
+      </button>
+      <button type="button" class="tab" role="tab" data-table="angle" aria-selected="false" aria-controls="stage">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M5 18h14M5 18L15.5 6.5M9.4 15.2a5.2 5.2 0 0 0 2.1-4.1"/>
+          <circle cx="5" cy="18" r="1.2"/>
+        </svg>
+        <span>表三 角度</span>
+      </button>
+      <button type="button" class="tab" role="tab" data-table="traverseSummary" aria-selected="false" aria-controls="stage">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 5.5h16M4 10.5h16M4 15.5h16M4 20h16M9 5.5v14.5"/>
+          <path d="M14 8.2l2.8 2.3-2.8 2.3"/>
+        </svg>
+        <span>表四 导线汇总</span>
+      </button>
+      <button type="button" class="tab" role="tab" data-table="levelingSummary" aria-selected="false" aria-controls="stage">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 6.5h18M3 11.5h18M3 16.5h18M3 21h18M8.5 6.5V21"/>
+          <path d="M13.5 9l2.6 2.1-2.6 2.1"/>
+        </svg>
+        <span>表五 水准汇总</span>
+      </button>
+      <button type="button" class="tab" role="tab" data-table="trigSummary" aria-selected="false" aria-controls="stage">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 19h18M5.5 19L12 5.5 18.5 19M9 12h6M4 8.5h3M17 8.5h3"/>
+          <circle cx="12" cy="5.5" r="1.2"/>
+        </svg>
+        <span>表六 高程</span>
+      </button>
+      <button type="button" class="tab" role="tab" data-table="traverseCalc" aria-selected="false" aria-controls="stage">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 19h16M4 19V5M4 15h4l3-7 4 11 2-4h3"/>
+          <circle cx="11" cy="8" r="1.2"/>
+        </svg>
+        <span>表G 计算</span>
+      </button>
+      <button type="button" id="linkage-tab" class="tab tab-linkage" role="tab" data-module="linkage" aria-selected="false" aria-controls="linkage" hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M9 15l6-6M7.5 12.5l-1 1a3.5 3.5 0 0 0 5 5l1-1M16.5 11.5l1-1a3.5 3.5 0 0 0-5-5l-1 1"/>
+        </svg>
+        <span>联立映射</span>
+      </button>
+    </nav>
+  </header>
+
+  <header id="topbar">
+    <div class="project-area" id="project-area">
+      <button type="button" id="project-switch" class="project-switch" aria-haspopup="menu" aria-expanded="false" aria-controls="project-menu" title="切换或管理项目">
+        <span class="project-switch-text">
+          <span class="project-switch-label">项目</span>
+          <span id="project-name" class="project-switch-name">默认项目</span>
+        </span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10l5 5 5-5"/></svg>
+      </button>
+      <div id="project-menu" class="project-menu" role="menu" aria-label="项目管理" hidden>
+        <div class="project-menu-head">
+          <span>切换项目</span>
+          <span id="project-count" class="project-count">1 个</span>
+        </div>
+        <div id="project-list" class="project-list" role="group" aria-label="项目列表"></div>
+        <form id="project-rename-form" class="project-rename" hidden>
+          <label class="sr-only" for="project-rename-input">项目名称</label>
+          <input type="text" id="project-rename-input" maxlength="40" autocomplete="off" spellcheck="false" placeholder="项目名称">
+          <button type="submit" class="project-mini primary">保存</button>
+          <button type="button" id="project-rename-cancel" class="project-mini">取消</button>
+        </form>
+        <div class="project-menu-actions">
+          <button type="button" id="project-new" class="project-action">新建</button>
+          <button type="button" id="project-duplicate" class="project-action">复制</button>
+          <button type="button" id="project-rename" class="project-action">重命名</button>
+          <button type="button" id="project-delete" class="project-action danger">删除</button>
+        </div>
+        <button type="button" id="project-export-current" class="project-export">导出当前项目（七表 JSON）</button>
+        <button type="button" id="project-export-all" class="project-export">导出全部项目（JSON）</button>
+        <button type="button" id="project-backup-dir" class="project-export is-secondary">打开备份目录</button>
+        <p class="project-menu-note">切换前会先保存当前项目；数据只存在本机。桌面版自动备份，浏览器版可导出 JSON 留存。</p>
+      </div>
+    </div>
+    <div id="table-tools" class="top-actions">
+      <button type="button" id="status-chip" class="status-chip is-blank" title="查看填写检查">空白</button>
+      <div id="quick-options" class="segmented quick" aria-label="本表快捷选项"></div>
+      <button type="button" id="bands-btn" class="tool-btn" aria-pressed="false" title="给有允许误差的计算值按倍数上色：白 ≤1× · 绿 1～2× · 黄 2～3× · 红 >3×">误差色</button>
+      <button type="button" id="settings-btn" class="tool-btn" title="本表选项（限差、等级、K、字体）">选项</button>
+      <button type="button" id="export-btn" class="tool-btn" title="导出当前表（其余各表为空页）">导出</button>
+      <button type="button" id="import-btn" class="tool-btn" title="导入 JSON（自动识别单表/七表/全部项目）">导入</button>
+      <button type="button" id="print-btn" class="tool-btn primary" title="打印本表">打印</button>
+    </div>
+  </header>
+
+  <main id="stage" class="stage" role="tabpanel" aria-label="记录表"></main>
+
+
+  <section id="linkage" class="linkage" role="tabpanel" aria-label="表一与表三联立映射" hidden>
+    <div class="linkage-sheet">
+      <header class="linkage-head">
+        <div class="linkage-title">
+          <span class="linkage-kicker">LINKAGE · 表一 → 表三</span>
+          <h1>联立映射</h1>
+          <p>表一的每个测站按下面这张表写入表三。只抄水平度盘读数与对应盘面的斜距，竖盘读数不进入表三；联立期间表三只读，解除联立后已写入的数值保留、可继续编辑。</p>
+        </div>
+        <div class="linkage-actions">
+          <button type="button" id="linkage-resync" class="linkage-btn primary" title="立即按当前映射把表一重新写入表三">重新同步</button>
+          <button type="button" id="linkage-auto" class="linkage-btn" title="清除所有手工目标位置与目标交换，恢复按站号自动排布">恢复自动映射</button>
+          <button type="button" id="linkage-restore" class="linkage-btn" title="恢复开启联立或表一破坏性操作前的完整备份">恢复备份</button>
+          <button type="button" id="linkage-disable" class="linkage-btn danger" title="关闭联立；表三数值保留并可编辑">解除联立</button>
+        </div>
+      </header>
+      <div id="linkage-summary" class="linkage-summary" role="status" aria-live="polite"></div>
+      <div id="linkage-notice" class="linkage-notice" role="status" aria-live="polite" hidden></div>
+      <div class="linkage-table-wrap">
+        <table class="linkage-table">
+          <thead>
+            <tr>
+              <th scope="col">表一来源</th>
+              <th scope="col">目标</th>
+              <th scope="col">写入表三的四行</th>
+              <th scope="col">表三位置</th>
+              <th scope="col">目标配对</th>
+              <th scope="col">状态</th>
+            </tr>
+          </thead>
+          <tbody id="linkage-rows"></tbody>
+        </table>
+      </div>
+      <p class="linkage-foot">站号规则：全局 g = 4 × 表一页序号 + 站内序号（都从 0 起），表三页 = ⌊g / 6⌋ + 1，站 = g mod 6 + 1。目标①写第 1/3 行（L①、R①），目标②写第 2/4 行（L②、R②）；交换只换目标，绝不反转盘左/盘右。表三表头只填空值，不覆盖已有内容。</p>
+    </div>
+  </section>
+
+  <section id="check-panel" hidden aria-label="填写检查">
+    <div class="check-head">
+      <div class="check-tabs" role="tablist" aria-label="检查面板">
+        <button type="button" role="tab" data-check-tab="issues" aria-selected="true">检查<span class="badge" id="check-tab-badge"></span></button>
+        <button type="button" role="tab" data-check-tab="rules" aria-selected="false">计算口径</button>
+      </div>
+      <div id="check-summary" class="check-summary"></div>
+      <button type="button" id="check-close" class="link-btn">收起</button>
+    </div>
+    <div id="check-body" class="check-body"></div>
+  </section>
+
+  <footer id="bottombar">
+    <div class="pager">
+      <button type="button" id="prev-page" title="上一页" aria-label="上一页">‹</button>
+      <span id="page-label" class="page-label">第 1 / 1 页</span>
+      <button type="button" id="next-page" title="下一页" aria-label="下一页">›</button>
+      <button type="button" id="owner-chip" class="owner-chip" hidden aria-haspopup="dialog" aria-expanded="false" title="本页在表五中的归属">归属：未设置</button>
+      <span class="sep" aria-hidden="true"></span>
+      <button type="button" id="add-page" title="在本表末尾新增一页（站数固定）">＋新页</button>
+      <button type="button" id="delete-page" class="danger-link" title="删除本页">删除本页</button>
+    </div>
+    <div class="zoomctl" role="group" aria-label="表格大小">
+      <span class="zoom-label" aria-hidden="true">大小</span>
+      <input type="text" id="zoom-value" class="zoom-value" inputmode="numeric" autocomplete="off" spellcheck="false" maxlength="4" value="100%" title="输入 60–500 的表格大小（相对本表 100% 基准），回车生效，Esc 取消；在表格上捏合触控板，或按住右键滚动滚轮，也可缩放" aria-label="表格大小 100%（相对本表基准），可输入 60 到 500 后回车；在表格上捏合触控板或按住右键滚动滚轮缩放">
+    </div>
+    <div id="save-status" class="save-status" role="status" aria-live="polite">
+      <span class="dot" aria-hidden="true"></span><span class="txt">新空白记录</span>
+    </div>
+    <button type="button" id="check-btn" class="check-btn" title="查看本表填写检查">填写检查</button>
+  </footer>
+</div>
+
+<div id="drawer-backdrop" class="backdrop" hidden></div>
+<aside id="drawer" hidden aria-label="本表选项">
+  <div class="drawer-head">
+    <h2 id="drawer-title">本表选项</h2>
+    <button type="button" id="drawer-close" class="link-btn">关闭</button>
+  </div>
+  <div id="drawer-body" class="drawer-body"></div>
+</aside>
+
+<div id="owner-popover" class="owner-popover" role="dialog" aria-label="表二本页归属" hidden>
+  <div class="owner-popover-head">
+    <strong>本页归属</strong>
+    <button type="button" id="owner-close" class="owner-close" aria-label="关闭">×</button>
+  </div>
+  <div id="owner-popover-body" class="owner-popover-body"></div>
+</div>
+
+<div id="modal-backdrop" class="modal-backdrop" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-message">
+    <h2 id="modal-title">请确认</h2>
+    <p id="modal-message"></p>
+    <div id="modal-actions" class="modal-actions"></div>
+  </div>
+</div>
+
+<div id="toast" role="status" aria-live="polite" hidden></div>
+<div id="zoom-hud" aria-hidden="true" hidden></div>
+<div id="print-root" aria-hidden="true"></div>
+<input type="file" id="import-file" accept=".json,application/json" hidden>
+
+<noscript>
+  <div style="padding:24px;font:14px/1.6 sans-serif;color:#111827">此工具需要启用 JavaScript。</div>
+</noscript>
+
+<script src="assets/sheet-data.js"></script>
+<script src="assets/calc-traverse.js"></script>
+<script src="assets/calc-leveling.js"></script>
+<script src="assets/calc-angle-distance.js"></script>
+<script src="assets/calc-summary.js"></script>
+<script src="assets/calc-traverse-calc.js"></script>
+<script src="assets/store.js"></script>
+<script src="assets/transfer.js"></script>
+<script src="assets/error-bands.js"></script>
+<script src="assets/platform.js"></script>
+<script src="assets/linkage.js"></script>
+<script src="assets/web-lite.js"></script>
+<script src="assets/app.js"></script>
+<script src="assets/shell.js"></script>
+</body>
+</html>

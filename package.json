@@ -1,0 +1,10 @@
+{
+  "name": "survey-jujin-lite",
+  "version": "0.1.0",
+  "private": true,
+  "description": "测量学局劲工具 · 网页轻量版",
+  "license": "MulanPSL-2.0",
+  "scripts": {
+    "build:single": "node tools/build-single.js"
+  }
+}
