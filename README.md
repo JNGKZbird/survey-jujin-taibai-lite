@@ -73,7 +73,7 @@
 
 ## 单文件版
 
-仓库已附带构建好的单文件版：[`dist/测量学局劲-轻量版.html`](https://github.com/JNGKZbird/survey-jujin-taibai-lite/blob/main/dist/测量学局劲-轻量版.html)，可直接下载或双击打开。
+Release 已附带构建好的单文件版：[下载](https://github.com/JNGKZbird/survey-jujin-taibai-lite/releases/download/v0.1.0/survey-jujin-lite_0.1.0.html)，可直接下载或双击打开。
 
 需要重新生成时（需 Node.js）：
 

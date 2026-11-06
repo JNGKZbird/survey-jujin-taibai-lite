@@ -1,5 +1,4 @@
 dist/*
-!dist/测量学局劲-轻量版.html
 node_modules/
 *.log
 .DS_Store
