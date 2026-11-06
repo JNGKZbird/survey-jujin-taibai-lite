@@ -34,15 +34,17 @@
 
 **唯一可靠的备份是导出 JSON。** 项目菜单 →「导出全部项目」；恢复时用「导入」或把 `.json` 文件拖进页面。
 
-## 生成单文件版
+## 单文件版
 
-如果需要把整个工具作为一个 HTML 文件分发：
+仓库附带了构建好的单文件版：[`dist/测量学局劲-轻量版.html`](https://github.com/JNGKZbird/survey-jujin-taibai-lite/blob/main/dist/测量学局劲-轻量版.html)，可直接下载、单独发送或双击打开；脚本、样式和许可证全文都已内嵌。
+
+源码更新后可以自己重新生成：
 
 ```text
 node tools/build-single.js
 ```
 
-产物在 `dist/测量学局劲-轻量版.html`，脚本、样式和许可证全文都会内嵌，可直接单独发送或双击打开。
+产物在 `dist/测量学局劲-轻量版.html`。单文件版是构建产物；如果与源码不一致，以源码重新构建为准。
 
 ## 目录
 
@@ -50,6 +52,7 @@ node tools/build-single.js
 index.html              页面入口
 assets/                 样式、计算、存储与界面脚本
 tools/build-single.js   单文件版构建脚本
+dist/                   构建好的单文件版
 LICENSE                 木兰宽松许可证第 2 版
 ```
 
