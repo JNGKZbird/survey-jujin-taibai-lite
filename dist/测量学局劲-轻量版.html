@@ -17813,39 +17813,62 @@ window.SHEET_DATA = {"version":1,"generatedFrom":"design-source/","sheets":{"tra
     <header class="readme-head">
       <div class="readme-head-text">
         <span class="readme-kicker">README</span>
-        <h2 id="readme-title">测量学局劲工具 · 网页轻量版</h2>
+        <h2 id="readme-title">测量学局劲工具（Survey Jujin）· 网页轻量版</h2>
       </div>
       <span class="readme-version">v0.1.0</span>
       <button type="button" id="readme-close" class="readme-close" aria-label="关闭 README" title="关闭">×</button>
     </header>
     <div class="readme-body" tabindex="0">
-<p>纯静态网页版测量记录表工具。无需安装、无需后端，打开即用；所有数据只保存在本机浏览器里，不向任何服务器发送。</p>
-<p>桌面版（Windows，Tauri v2）：<a href="https://github.com/JNGKZbird/survey-jujin-taibai" target="_blank" rel="noopener noreferrer">survey-jujin-taibai</a></p>
-<h2>功能</h2>
-<ul><li>表一 导线、表二 水准、表三 角度记录</li><li>表四 导线汇总、表五 水准汇总、表六 三角高程</li><li>表G 导线计算</li><li>七表联立映射</li><li>多项目、项目重命名 / 复制 / 删除</li><li>JSON 单表、七表、全部项目导入导出</li><li>打印 / 另存为 PDF</li><li>浅色、深色、跟随系统主题</li><li>误差色分档</li></ul>
-<h2>直接使用</h2>
-<p>直接打开 <code>index.html</code> 即可。没有构建步骤，没有外部依赖，也不会发起网络请求。</p>
-<h2>托管</h2>
-<p>本仓库根目录就是静态站点，可直接部署到 GitHub Pages、Gitee Pages 或任意静态服务器。若使用 GitHub Pages，仓库根目录已经带有 <code>.nojekyll</code>。</p>
+<p>测量学局劲工具（Survey Jujin）网页轻量版是面向土木类学生的纯静态测量记录与平差工具。七张表联动：表一→表三可联立（默认关闭）；表四、表六由表一推导，表五由表二推导，表G 由表一与表六带入。无需安装：用手机、平板或电脑的浏览器打开 <code>index.html</code>，或直接打开单文件 HTML；数据只保存在本机浏览器，原创代码采用木兰宽松许可证第 2 版（MulanPSL-2.0）。</p>
+<h2>速览</h2>
+<ul><li><strong>七张表</strong>：表一、表二、表三是记录表；表四、表五、表六是汇总与平差；表G 是导线计算表。</li><li><strong>数据</strong>：数据保存在本机浏览器的 <code>localStorage</code>，不上传；唯一可靠的备份是「导出全部项目」JSON。</li><li><strong>许可</strong>：原创代码采用木兰宽松许可证第 2 版（MulanPSL-2.0）；本版不含 AI 助手、联网搜索、第三方字体或公式库。</li><li><strong>名字</strong>：「局劲」是陕北话里的「厉害」。</li></ul>
+<h2>能做什么</h2>
+<p><strong>记录。</strong> 表一录全站仪导线观测，4 站/页；表二录三、四等水准（双面尺法），8 站/页，尺读数按米填；表三录角度与距离，6 站/页。三张记录表都能新增页，单表最多 100 页；支持多项目。</p>
+<p><strong>联立。</strong> 表一→表三可开启联立，默认关闭。开启后表三只读，按全局站号取表一的水平度盘读数与斜距，竖盘读数不进表三；解除后数值保留、可编辑。</p>
+<p><strong>推导。</strong> 表四由表一推导，表五由表二推导，表六由表一推导，表G 由表一与表六带入。表四、表五、表六正文不单独保存，打开时按来源表现算；表G 行数据会保存，带入后还能逐格改。</p>
+<p><strong>检查。</strong> 课程限差是默认值，可在界面里修改，不声称唯一口径。默认：2C ≤ 12″、指标差 ≤ 25″、水平角上/下半测回较差 ≤ 20″；表六对向较差可选 60√D、40√D、0.4×S，闭合差按 40√ΣD；表G 方位角闭合差按 fβ = 40″√n，全长相对闭合差按 K ≤ 1/4000。</p>
+<p><strong>误差色。</strong> 按允许误差倍数整格铺底：≤1× 不着色，1–2× 绿，2–3× 黄，&gt;3× 红；边界值归较低一档。默认关闭，顶栏可开。表五与表G 不上色，表G 只在摘要卡比较 fβ 与 K。</p>
+<p><strong>打印。</strong> 每张表按 A4 版式（横向或纵向）排版，用浏览器打印对话框打印或另存为 PDF。打印跟随误差色开关；要印出底色，请在打印对话框勾选“背景图形”。</p>
+<h2>支持范围</h2>
+<table><thead><tr><th>表</th><th>内容</th><th>每页容量</th><th>数据来源</th></tr></thead><tbody><tr><td>表一</td><td>全站仪导线观测记录表</td><td>4 站/页</td><td>手工录入</td></tr><tr><td>表二</td><td>三、四等水准测量记录、计算表（双面尺法）</td><td>8 站/页</td><td>手工录入</td></tr><tr><td>表三</td><td>角度距离观测记录手簿</td><td>6 站/页</td><td>手工录入；或联立时取表一</td></tr><tr><td>表四</td><td>导线测量原始数据汇总</td><td>1 页</td><td>表一</td></tr><tr><td>表五</td><td>支水准测量原始数据汇总</td><td>8 人/页，每人 4 段</td><td>表二</td></tr><tr><td>表六</td><td>三角高程测量平差表</td><td>17 边/页</td><td>表一</td></tr><tr><td>表G</td><td>导线计算表</td><td>11 行/页</td><td>表一 + 表六，可改</td></tr></tbody></table>
+<p>表四固定一页；其余各表最多 100 页。表四、表五、表六正文不单独保存，表G 行数据会保存、可改。表G 每页 11 行，一条导线可跨页续接；另起导线在选项里切换。</p>
+<h2>怎么打开</h2>
+<p><strong>目录版。</strong> <code>index.html</code> 与 <code>assets/</code> 放在同一目录，双击 <code>index.html</code> 即可打开。<code>file://</code> 下不同浏览器对资源和存储的隔离规则不一致；想固定数据位置，建议用本地静态服务器指向这个目录，或使用托管方式。</p>
+<p><strong>静态托管。</strong> 仓库根目录就是静态站点。把根目录里的内容上传到 GitHub Pages、Gitee Pages 或任意静态服务器；仓库已带 <code>.nojekyll</code>。不要把整个目录再套一层，否则地址会多一级；保留 <code>LICENSE</code>。</p>
+<p><strong>单文件版。</strong> 构建后打开 <code>dist/测量学局劲-轻量版.html</code>，所有脚本、样式和许可证全文都在文件里，不需要 <code>assets/</code> 目录，也不会发起网络请求。适合作为一个附件发给同学。</p>
+<p>手机和平板用浏览器打开托管地址最稳；单文件能否直接打开取决于系统与浏览器。表格按桌面宽度设计，窄屏需缩放或横向查看；正式打印建议用电脑。</p>
 <h2>数据与备份</h2>
-<p>数据保存在浏览器的 <code>localStorage</code> 中，键名为 <code>survey-jujin.dev.v1</code>。</p>
-<ul><li>刷新、关闭浏览器再打开，数据通常还在。</li><li>清理浏览器站点数据、使用无痕模式、换浏览器或换设备，数据会丢失。</li><li>浏览器在磁盘压力下也可能回收站点数据；页面首次交互时会请求 <code>navigator.storage.persist()</code>，但这只能降低概率，不能阻止手动清理。</li></ul>
-<p><strong>唯一可靠的备份是导出 JSON。</strong> 项目菜单 →「导出全部项目」；恢复时用「导入」或把 <code>.json</code> 文件拖进页面。</p>
+<p>数据保存在浏览器的 <code>localStorage</code> 里，按“来源（origin）”隔离；键名是 <code>survey-jujin.dev.v1</code>。刷新或重开浏览器，数据通常还在。清理站点数据、无痕模式、换浏览器或设备都会丢失数据；<code>file://</code> 下还可能按文件或目录隔离；<code>localStorage</code> 约 5 MB，写满后新改动无法保存（页面会提示）。页面第一次交互时会请求 <code>navigator.storage.persist()</code>，只能降低浏览器自动回收的概率，不能阻止手动清理。</p>
+<p><strong>唯一可靠的备份是导出 JSON。</strong> 项目菜单 →「导出全部项目」；恢复时用「导入」，或把 <code>.json</code> 文件直接拖进页面。首次打开会提示一次；如果超过 7 天没有导出，启动后会再提醒一次。</p>
+<p>导入会自动识别单表、七表与全部项目。单表导入只替换目标表与该表设置，其余六表、联立映射、项目名不变；导入全部项目会整体替换项目库，确认框会先提醒备份。多个标签页同开时，另一页改写项目库，本页会提示刷新；两边不会自动合并，需同时看两份时请先导出。</p>
+<p><code>localStorage</code> 只是工作现场，不是备份。</p>
+<h2>与桌面版的差异</h2>
+<table><thead><tr><th>能力</th><th>网页轻量版</th><th>桌面版</th></tr></thead><tbody><tr><td>七表、汇总、表G、联立、多项目</td><td>有</td><td>有</td></tr><tr><td>JSON 导入导出、打印/PDF</td><td>有</td><td>有</td></tr><tr><td>主题、误差色</td><td>有</td><td>有</td></tr><tr><td>数据保存</td><td>浏览器 <code>localStorage</code></td><td>本机 <code>store.json</code> + 备份</td></tr><tr><td>AI 助手、联网搜索、识图</td><td>无</td><td>有</td></tr><tr><td>字体</td><td>系统字体</td><td>随包字体</td></tr><tr><td>原生备份目录</td><td>无</td><td>有</td></tr></tbody></table>
+<p>两版的七表结构与 JSON 文件格式兼容。网页轻量版是<a href="https://github.com/JNGKZbird/survey-jujin-taibai" target="_blank" rel="noopener noreferrer">主项目仓库</a> <code>web/</code> 的构建产物，表格、计算与联立行为与桌面版同源；差别主要在存储、字体和 AI 助手。</p>
 <h2>单文件版</h2>
-<p>仓库附带了构建好的单文件版：<a href="https://github.com/JNGKZbird/survey-jujin-taibai-lite/blob/main/dist/测量学局劲-轻量版.html" target="_blank" rel="noopener noreferrer"><code>dist/测量学局劲-轻量版.html</code></a>，可直接下载、单独发送或双击打开；脚本、样式和许可证全文都已内嵌。</p>
-<p>源码更新后可以自己重新生成：</p>
+<p>仓库已附带构建好的单文件版：<a href="https://github.com/JNGKZbird/survey-jujin-taibai-lite/blob/main/dist/测量学局劲-轻量版.html" target="_blank" rel="noopener noreferrer"><code>dist/测量学局劲-轻量版.html</code></a>，可直接下载或双击打开。</p>
+<p>需要重新生成时（需 Node.js）：</p>
 <pre><code class="language-text">node tools/build-single.js</code></pre>
-<p>产物在 <code>dist/测量学局劲-轻量版.html</code>。单文件版是构建产物；如果与源码不一致，以源码重新构建为准。</p>
-<h2>目录</h2>
-<pre><code class="language-text">index.html              页面入口
-assets/                 样式、计算、存储与界面脚本
-tools/build-single.js   单文件版构建脚本
-dist/                   构建好的单文件版
-LICENSE                 木兰宽松许可证第 2 版</code></pre>
-<h2>维护方式</h2>
-<p>本仓库的 <code>index.html</code> 与 <code>assets/</code> 由主项目构建生成：主项目先执行 <code>pnpm build:web</code> 生成 <code>dist-web/</code>，再执行 <code>pnpm sync:lite-repo</code> 同步到这里。日常修改请回主项目改源码；如果直接改本仓库，下次同步会被覆盖。单独 fork 使用不受影响。</p>
-<h2>许可</h2>
-<p>本软件以 <strong>木兰宽松许可证，第 2 版（Mulan PSL v2）</strong> 开源，完整文本见 <code>LICENSE</code>。本仓库不包含第三方字体、公式库或其他第三方资源。</p>
+<p>产物是 <code>dist/测量学局劲-轻量版.html</code>，脚本、样式和许可证全文都会内嵌。单文件版是构建产物，源码更新后请重新构建。</p>
+<p>如果只拿到一个 HTML 附件，直接打开即可；数据仍然保存在浏览器里，换电脑前请先导出 JSON。</p>
+<h2>常见问题</h2>
+<h3>手机上能用吗？</h3>
+<p>能。手机和平板浏览器打开托管地址即可；表格按 A4 宽度设计，窄屏需缩放或横向查看。</p>
+<h3>只填表一、表二够吗？</h3>
+<p>够。打开表一→表三联立后，表三自动取表一的数据；不开联立时表三手填即可。表四、表五、表六、表G 不用单独填。</p>
+<h3>数据存在哪？换电脑怎么办？</h3>
+<p>数据在本机浏览器的 <code>localStorage</code>，键名 <code>survey-jujin.dev.v1</code>，不上传。换电脑或浏览器前，用「导出全部项目」导出 JSON，再到新环境「导入」。</p>
+<h3>清理浏览器数据会怎样？</h3>
+<p>会丢。清理站点数据、用无痕模式、换浏览器或设备都可能让数据消失；浏览器在磁盘压力下也可能回收。请定期导出 JSON。</p>
+<h3>能打印或另存为 PDF 吗？</h3>
+<p>能。工具栏「打印」打开浏览器打印对话框，选择“另存为 PDF”即可。要印出误差色底色，请在打印对话框勾选“背景图形”。</p>
+<h3>导入单表会覆盖其他表吗？</h3>
+<p>不会。单表导入只替换目标表与该表设置，其余六表、联立映射、项目名不变；导入全部项目才整体替换项目库。联立时表一和表三不能单独导入。</p>
+<h3>会把数据传到网上吗？许可是什么？</h3>
+<p>不会。页面不向第三方服务器发送数据；目录版只从托管方加载自身静态资源，单文件版零外部请求。许可是木兰宽松许可证第 2 版（MulanPSL-2.0），完整文本见 <code>LICENSE</code>。</p>
+<h2>许可与维护</h2>
+<p>原创代码与文档采用木兰宽松许可证第 2 版（MulanPSL-2.0）；完整文本见 <code>LICENSE</code>。单文件版在文件头标注 SPDX，末尾嵌入许可证全文。本版不含第三方字体、公式库或其他第三方资源。</p>
+<p>轻量版由主项目 <code>web/</code> 构建生成：主项目执行 <code>pnpm build:web</code> 生成 <code>dist-web/</code>，再执行 <code>pnpm sync:lite-repo</code> 同步到 <code>lite/</code>。日常修改请回主项目改源码；直接改 <code>index.html</code> 或 <code>assets/</code> 会在下次同步时被覆盖。单独 fork 后可按需要修改，不受这条同步流程限制。</p>
     </div>
   </div>
 </dialog>
